@@ -1,14 +1,12 @@
----
+CODE_OF_CONDUCT.md
 
-### CODE_OF_CONDUCT.md
+Contributor Code of Conduct
 
-```markdown
-# Contributor Code of Conduct
+As contributors and maintainers of the TMA project,
+we are committed to fostering a welcoming, inclusive, and constructive environment.
+All contributors are expected to abide by the following guidelines:
 
-As contributors and maintainers of the TMA project, we are committed to fostering a welcoming, inclusive, and constructive environment. All contributors are expected to abide by the following guidelines:
-
-## Our Standards
-
+Our Standards
 Examples of behavior that contribute to a positive environment:
 
 - Respectful and inclusive language
@@ -23,18 +21,16 @@ Examples of unacceptable behavior:
 - Posting private information without permission
 - Discriminatory or derogatory remarks
 
-## Reporting Issues
+Reporting Issues:
 
-If you experience or witness any violations of the Code of Conduct, please report it by reaching out to [maintainer-email@example.com]. All complaints will be reviewed and handled with confidentiality.
+If you experience or witness any violations of the Code of Conduct,
+please report it by reaching out to me.
+All complaints will be reviewed and handled with confidentiality.
 
-## Enforcement
+Enforcement:
 
-Project maintainers have the right to remove, edit, or reject contributions that do not align with this Code of Conduct. Further enforcement actions may be taken in cases of repeated or severe violations.
-
-## Acknowledgements
-
-This Code of Conduct is adapted from the [Contributor Covenant](https://www.contributor-covenant.org/).
-
----
+Project maintainers have the right to remove, edit, or reject contributions that do
+not align with this Code of Conduct. Further enforcement actions may be
+taken in cases of repeated or severe violations.
 
 Thank you for contributing to TMA and helping us build a better project and community!
