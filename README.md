@@ -33,5 +33,5 @@ Ensure you have the following installed:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/username/TMA.git
+   git clone https://github.com/genGit963/TMA.git
    ```
