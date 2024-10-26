@@ -2,10 +2,9 @@
 
 **TMA** is an open-source Task Management Application built using the [NestJS](https://nestjs.com/) framework on Node.js. TMA provides a robust, RESTful API for managing tasks with CRUD operations and user authentication. This project aims to serve as a comprehensive task management tool for individuals and teams, offering features such as task creation, status tracking, priority setting, and user-based assignments.
 
-## Table of Contents
+**Table of Contents**
 
 - [TMA - Tasks Management Application](#tma---tasks-management-application)
-  - [Table of Contents](#table-of-contents)
   - [Features](#features)
   - [Getting Started](#getting-started)
     - [Prerequisites](#prerequisites)
