@@ -39,7 +39,7 @@ export class TasksService {
 
   getTasksFilter(filterDto: GetTasksFilterDto): Task[] {
     const { status, search } = filterDto;
-    console.log(filterDto);
+    // console.log(filterDto);
     // cache tasks
     let tasks: Task[] = this.getTasks();
 
