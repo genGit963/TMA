@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Task, TaskStatus } from './tasks.model';
 import { v4 as uuidv4 } from 'uuid';
-import { CreateTaskDto } from './create-task.dto';
+import { CreateTaskDto } from './dto/create-task.dto';
 import { GetTasksFilterDto } from './get-tasks-filter.dto';
 
 @Injectable()
@@ -81,10 +81,10 @@ export class TasksService {
   }
 
   deleteTask(id: string): Task {
-    const checkIfTaskExist: Task = this.getTaskById(id); // info: error handling reuseability
-    if (checkIfTaskExist) {
-      this.tasks = this.tasks.filter((task) => task.id !== checkIfTaskExist.id);
-      return checkIfTaskExist;
+    const checkTaskExist: Task = this.getTaskById(id); // info: error handling reuseability
+    if (checkTaskExist) {
+      this.tasks = this.tasks.filter((task) => task.id !== checkTaskExist.id);
+      return checkTaskExist;
     }
   }
 
