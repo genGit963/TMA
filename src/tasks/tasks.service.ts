@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { TaskRepository } from './task.repository';
 import { Task } from './task.entity';
 import { MongoRepository } from 'typeorm';
+import { TaskStatus } from './task-status.enum';
 
 @Injectable()
 export class TasksService {
@@ -41,13 +42,17 @@ export class TasksService {
     return task;
   }
 
-  // getTaskById(id: string): Task {
-  //   const task = this.tasks.find((task) => task.id === id);
-  //   if (!task) {
-  //     throw new NotFoundException(`Task isn't found !`);
-  //   }
-  //   return task;
-  // }
+  async createTask(createTaskDto: CreateTaskDto): Promise<Task> {
+    const task = new Task();
+    const { title, description } = createTaskDto;
+    task.title = title;
+    task.description = description;
+    task.status = TaskStatus.OPEN;
+
+    const saveTask = await task.save();
+
+    return saveTask;
+  }
 
   // createTask(createTaskDto: CreateTaskDto): Task {
   //   const { title, description } = createTaskDto;
@@ -60,6 +65,7 @@ export class TasksService {
   //   this.tasks.push(task);
   //   return task;
   // }
+
   // deleteTask(id: string): Task {
   //   const checkTaskExist: Task = this.getTaskById(id); // info: error handling reuseability
   //   if (checkTaskExist) {
