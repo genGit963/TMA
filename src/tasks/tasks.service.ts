@@ -14,25 +14,24 @@ export class TasksService {
     private readonly taskRepository: TaskRepository, // Inject the Task entity
   ) {}
 
-  // getTasks(): Task[] {
-  //   return this.tasks;
-  // }
-  // getTasksFilter(filterDto: GetTasksFilterDto): Task[] {
-  //   const { status, search } = filterDto;
-  //   // console.log(filterDto);
-  //   // cache tasks
-  //   let tasks: Task[] = this.getTasks();
-  //   if (status) {
-  //     tasks = tasks.filter((task) => task.status === status);
-  //   }
-  //   if (search) {
-  //     tasks = tasks.filter(
-  //       (task) =>
-  //         task.title.includes(search) || task.description.includes(search),
-  //     );
-  //   }
-  //   return tasks;
-  // }
+  async getTasks(): Promise<Task[]> {
+    return await this.taskRepository.find();
+  }
+
+  async getTasksFilter(filterDto: GetTasksFilterDto): Promise<Task[]> {
+    const { status, search } = filterDto;
+    let tasks: Task[] = await this.getTasks();
+    if (status) {
+      tasks = tasks.filter((task) => task.status === status);
+    }
+    if (search) {
+      tasks = tasks.filter(
+        (task) =>
+          task.title.includes(search) || task.description.includes(search),
+      );
+    }
+    return tasks;
+  }
 
   async getTaskById(id: number): Promise<Task> {
     const task = await this.taskRepository.findOne({ where: { id } });
@@ -43,15 +42,7 @@ export class TasksService {
   }
 
   async createTask(createTaskDto: CreateTaskDto): Promise<Task> {
-    const task = new Task();
-    const { title, description } = createTaskDto;
-    task.title = title;
-    task.description = description;
-    task.status = TaskStatus.OPEN;
-
-    const saveTask = await task.save();
-
-    return saveTask;
+    return this.taskRepository.createTask(createTaskDto);
   }
 
   // createTask(createTaskDto: CreateTaskDto): Task {
