@@ -4,12 +4,13 @@ import { GetTasksFilterDto } from './get-tasks-filter.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TaskRepository } from './task.repository';
 import { Task } from './task.entity';
+import { MongoRepository } from 'typeorm';
 
 @Injectable()
 export class TasksService {
   constructor(
-    @InjectRepository(TaskRepository)
-    private taskRepository: TaskRepository,
+    @InjectRepository(Task)
+    private readonly taskRepository: TaskRepository, // Inject the Task entity
   ) {}
 
   // getTasks(): Task[] {

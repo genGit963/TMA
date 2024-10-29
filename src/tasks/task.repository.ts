@@ -1,5 +1,6 @@
-import { EntityRepository, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { Task } from './task.entity';
+import { Injectable } from '@nestjs/common';
 
-@EntityRepository(Task)
+@Injectable() // Make it injectable for dependency injection
 export class TaskRepository extends Repository<Task> {}
