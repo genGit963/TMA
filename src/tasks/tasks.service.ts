@@ -4,7 +4,6 @@ import { GetTasksFilterDto } from './get-tasks-filter.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TaskRepository } from './task.repository';
 import { Task } from './task.entity';
-import { MongoRepository } from 'typeorm';
 import { TaskStatus } from './task-status.enum';
 
 @Injectable()
@@ -15,7 +14,7 @@ export class TasksService {
   ) {}
 
   async getTasks(): Promise<Task[]> {
-    return await this.taskRepository.find();
+    return await this.taskRepository.find({});
   }
 
   async getTasksFilter(filterDto: GetTasksFilterDto): Promise<Task[]> {
@@ -33,6 +32,10 @@ export class TasksService {
     return tasks;
   }
 
+  // async getTasksFilter(filterDto: GetTasksFilterDto): Promise<Task[]> {
+  //   return await this.taskRepository.getTasks(filterDto);
+  // }
+
   async getTaskById(id: number): Promise<Task> {
     const task = await this.taskRepository.findOne({ where: { id } });
     if (!task) {
@@ -45,28 +48,33 @@ export class TasksService {
     return this.taskRepository.createTask(createTaskDto);
   }
 
-  // createTask(createTaskDto: CreateTaskDto): Task {
+  // async createTask(createTaskDto: CreateTaskDto): Promise<Task> {
+  //   const task = new Task();
+
   //   const { title, description } = createTaskDto;
-  //   const task: Task = {
-  //     id: uuidv4(),
-  //     title,
-  //     description,
-  //     status: TaskStatus.OPEN,
-  //   };
-  //   this.tasks.push(task);
-  //   return task;
+
+  //   task.title = title;
+  //   task.description = description;
+  //   task.status = TaskStatus.OPEN;
+
+  //   const saveTask = await task.save();
+
+  //   return saveTask;
   // }
 
-  // deleteTask(id: string): Task {
-  //   const checkTaskExist: Task = this.getTaskById(id); // info: error handling reuseability
-  //   if (checkTaskExist) {
-  //     this.tasks = this.tasks.filter((task) => task.id !== checkTaskExist.id);
-  //     return checkTaskExist;
-  //   }
-  // }
-  // updateTaskStatus(id: string, status: TaskStatus): Task {
-  //   const task: Task = this.getTaskById(id); // info: error handling reuseability
-  //   task.status = status;
-  //   return task;
-  // }
+  async deleteTask(id: number): Promise<Task> {
+    const checkTaskExist: Task = await this.getTaskById(id); // info: error handling reuseability
+    if (checkTaskExist) {
+      await this.taskRepository.delete(checkTaskExist.id);
+      return checkTaskExist;
+    }
+  }
+
+  async updateTaskStatus(id: number, status: TaskStatus): Promise<Task> {
+    const task: Task = await this.getTaskById(id); // info: error handling reuseability
+    task.status = status;
+    const updatedTask = await task.save();
+
+    return updatedTask;
+  }
 }
