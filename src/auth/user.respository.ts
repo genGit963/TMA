@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
 import { UserEntity } from './user.entity';
 import { UserAuthDto } from './auth.dto';
@@ -8,8 +12,22 @@ export class UserRepository extends Repository<UserEntity> {
   constructor(private dataSource: DataSource) {
     super(UserEntity, dataSource.createEntityManager());
   }
+
+  async getUserByUsername(username: string): Promise<UserEntity> {
+    const user = await this.findOneBy({ username });
+    if (!user) {
+      throw new NotFoundException(`${username} not found !`);
+    }
+    return user;
+  }
+
   async signUp(newUserDto: UserAuthDto): Promise<string> {
     const { username, password } = newUserDto;
+
+    const checkUserExistAlready = await this.getUserByUsername(username);
+    if (checkUserExistAlready) {
+      throw new BadRequestException(`${username} already exist !`);
+    }
 
     const newUser = new UserEntity();
     newUser.username = username;
