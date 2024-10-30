@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
 import { UserEntity } from './user.entity';
-import { UserAuthDto } from './auth.dto';
+import { UserAuthDto } from './dto/auth.dto';
 
 @Injectable() // Make it injectable for dependency injection
 export class UserRepository extends Repository<UserEntity> {
@@ -24,7 +24,7 @@ export class UserRepository extends Repository<UserEntity> {
   async signUp(newUserDto: UserAuthDto): Promise<string> {
     const { username, password } = newUserDto;
 
-    const checkUserExistAlready = await this.getUserByUsername(username);
+    const checkUserExistAlready = await this.findOneBy({ username });
     if (checkUserExistAlready) {
       throw new BadRequestException(`${username} already exist !`);
     }
