@@ -8,7 +8,7 @@ export class UserRepository extends Repository<UserEntity> {
   constructor(private dataSource: DataSource) {
     super(UserEntity, dataSource.createEntityManager());
   }
-  async signUp(newUserDto: UserAuthDto): Promise<UserEntity> {
+  async signUp(newUserDto: UserAuthDto): Promise<string> {
     const { username, password } = newUserDto;
 
     const newUser = new UserEntity();
@@ -17,7 +17,7 @@ export class UserRepository extends Repository<UserEntity> {
 
     const registerUser = await newUser.save();
     if (registerUser) {
-      return registerUser;
+      return `User: ${registerUser.username} registered successfully !`;
     }
   }
 }
