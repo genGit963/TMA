@@ -9,32 +9,31 @@ import { TaskStatus } from './task-status.enum';
 @Injectable()
 export class TasksService {
   constructor(
-    @InjectRepository(Task)
     private readonly taskRepository: TaskRepository, // Inject the Task entity
   ) {}
 
   async getTasks(): Promise<Task[]> {
-    return await this.taskRepository.find({});
-  }
-
-  async getTasksFilter(filterDto: GetTasksFilterDto): Promise<Task[]> {
-    const { status, search } = filterDto;
-    let tasks: Task[] = await this.getTasks();
-    if (status) {
-      tasks = tasks.filter((task) => task.status === status);
-    }
-    if (search) {
-      tasks = tasks.filter(
-        (task) =>
-          task.title.includes(search) || task.description.includes(search),
-      );
-    }
-    return tasks;
+    return await this.taskRepository.find();
   }
 
   // async getTasksFilter(filterDto: GetTasksFilterDto): Promise<Task[]> {
-  //   return await this.taskRepository.getTasks(filterDto);
+  //   const { status, search } = filterDto;
+  //   let tasks: Task[] = await this.getTasks();
+  //   if (status) {
+  //     tasks = tasks.filter((task) => task.status === status);
+  //   }
+  //   if (search) {
+  //     tasks = tasks.filter(
+  //       (task) =>
+  //         task.title.includes(search) || task.description.includes(search),
+  //     );
+  //   }
+  //   return tasks;
   // }
+
+  async getTasksFilter(filterDto: GetTasksFilterDto): Promise<Task[]> {
+    return await this.taskRepository.getTasks(filterDto);
+  }
 
   async getTaskById(id: number): Promise<Task> {
     const task = await this.taskRepository.findOne({ where: { id } });
