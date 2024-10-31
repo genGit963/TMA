@@ -1,23 +1,29 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { UserRepository } from './user.respository';
+import { UserRepository } from './user.repository';
 import { UserAuthDto } from './dto/auth.dto';
 import { error } from 'console';
+import { JwtService } from '@nestjs/jwt';
+import { UserJwtPayload, UserLoginRespone } from './jwt-payload.interface';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly userRespository: UserRepository) {}
+  constructor(
+    private readonly userRespository: UserRepository,
+    private jwtServices: JwtService,
+  ) {}
 
   async signUp(newUserDto: UserAuthDto): Promise<string> {
     return await this.userRespository.signUp(newUserDto);
   }
 
-  async signIn(
-    loginUserDto: UserAuthDto,
-  ): Promise<{ username: string; token: string }> {
-    const user = await this.userRespository.verifyUserPassword(loginUserDto);
+  async signIn(loginUserDto: UserAuthDto): Promise<UserLoginRespone> {
+    const username: string =
+      await this.userRespository.verifyUserPassword(loginUserDto);
     try {
-      if (user) {
-        return { username: user, token: 'Jwt_token' };
+      if (username) {
+        const jwtPayload: UserJwtPayload = { username };
+        const accessToken = this.jwtServices.sign(jwtPayload);
+        return { Token: accessToken };
       } else {
         throw error;
       }
