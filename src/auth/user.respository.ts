@@ -1,9 +1,12 @@
 import {
   BadRequestException,
+  ConflictException,
   Injectable,
+  InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
+import * as bcrypt from 'bcrypt';
 import { UserEntity } from './user.entity';
 import { UserAuthDto } from './dto/auth.dto';
 
@@ -24,18 +27,40 @@ export class UserRepository extends Repository<UserEntity> {
   async signUp(newUserDto: UserAuthDto): Promise<string> {
     const { username, password } = newUserDto;
 
-    const checkUserExistAlready = await this.findOneBy({ username });
-    if (checkUserExistAlready) {
-      throw new BadRequestException(`${username} already exist !`);
-    }
-
     const newUser = new UserEntity();
     newUser.username = username;
-    newUser.password = password;
+    newUser.salt = await bcrypt.genSalt();
+    newUser.password = await this.hashPassword(password, newUser.salt);
 
-    const registerUser = await newUser.save();
-    if (registerUser) {
-      return `User: ${registerUser.username} registered successfully !`;
+    try {
+      const registerUser = await newUser.save();
+      if (registerUser) {
+        return `User: ${registerUser.username} registered successfully !`;
+      }
+    } catch (error) {
+      if (error.code === '23505') {
+        throw new ConflictException('User already exists !');
+      } else {
+        throw new InternalServerErrorException();
+      }
     }
+  }
+
+  async verifyUserPassword(loginUserDto: UserAuthDto): Promise<String> {
+    const { username, password } = loginUserDto;
+    const user = await this.findOneBy({ username });
+
+    if (user && (await user.verifyPassword(password))) {
+      return user.username;
+    } else {
+      return null;
+    }
+  }
+
+  private async hashPassword(
+    plainPassword: string,
+    salt: string,
+  ): Promise<string> {
+    return await bcrypt.hash(plainPassword, salt);
   }
 }
