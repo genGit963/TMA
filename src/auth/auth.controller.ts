@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   Post,
+  Req,
   UseGuards,
   UsePipes,
   ValidationPipe,
@@ -31,9 +32,15 @@ export class AuthController {
     return this.authServices.signIn(loginUserDto);
   }
 
-  @Get('/test')
-  @UseGuards(AuthGuard())
-  test(@GetUser() user: UserEntity) {
-    console.log(user);
-  }
+  // @Get('/test')
+  // @UseGuards(AuthGuard())
+  // test(@Req() req) {
+  //   console.log('test auth : ', req.user);
+  // }
+
+  // @Get('/testgu')
+  // @UseGuards(AuthGuard('jwt'))
+  // testGU(@GetUser() user: UserEntity) {
+  //   console.log('test auth gu : ', user);
+  // }
 }
