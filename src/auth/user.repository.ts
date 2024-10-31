@@ -34,7 +34,7 @@ export class UserRepository extends Repository<UserEntity> {
     try {
       const registerUser = await newUser.save();
       if (registerUser) {
-        return `User: ${registerUser.username} registered successfully !`;
+        return `${registerUser.username.toUpperCase()} registered successfully !`;
       }
     } catch (error) {
       if (error.code === '23505') {

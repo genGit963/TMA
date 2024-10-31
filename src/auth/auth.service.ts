@@ -9,7 +9,7 @@ import { UserJwtPayload, UserLoginRespone } from './jwt-payload.interface';
 export class AuthService {
   constructor(
     private readonly userRespository: UserRepository,
-    private jwtServices: JwtService,
+    private readonly jwtServices: JwtService,
   ) {}
 
   async signUp(newUserDto: UserAuthDto): Promise<string> {
