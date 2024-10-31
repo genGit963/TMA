@@ -17,4 +17,9 @@ export class AuthController {
   signUp(@Body() newUserDto: UserAuthDto): Promise<string> {
     return this.authServices.signUp(newUserDto);
   }
+
+  @Post('/signin')
+  signIn(@Body(ValidationPipe) loginUserDto: UserAuthDto): Promise<Object> {
+    return this.authServices.signIn(loginUserDto);
+  }
 }
