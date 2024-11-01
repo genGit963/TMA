@@ -1,0 +1,8 @@
+db:
+  host: 'localhost'
+  username: 'mahesh'
+  password: 'mahesh'
+  synchronize: true
+
+jwt:
+  secrt: 'verysecretjwtcode963!@#'
