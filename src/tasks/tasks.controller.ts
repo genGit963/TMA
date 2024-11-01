@@ -29,12 +29,14 @@ export class TasksController {
   @Get()
   getTasks(
     @Query(ValidationPipe) filterDto: GetTasksFilterDto,
+    @GetUser() user: UserEntity,
   ): Promise<Task[]> {
-    if (Object.keys(filterDto).length) {
-      return this.tasksService.getTasksFilter(filterDto);
-    } else {
-      return this.tasksService.getTasks();
-    }
+    return this.tasksService.getTasksFilter(filterDto, user);
+  }
+
+  @Get('/all')
+  getAllTasks(): Promise<Task[]> {
+    return this.tasksService.getTasks();
   }
 
   @Get('/:id')
