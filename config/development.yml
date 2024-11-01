@@ -5,4 +5,4 @@ db:
   synchronize: true
 
 jwt:
-  secrt: 'verysecretjwtcode963!@#'
+  secret: 'verysecrtcode963'

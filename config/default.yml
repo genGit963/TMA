@@ -4,7 +4,7 @@ server:
 db:
   type: 'postgres'
   port: 5432
-  databse: 'tma_database'
+  db_name: 'tma_database'
 
 jwt:
   expiresIn: 3600

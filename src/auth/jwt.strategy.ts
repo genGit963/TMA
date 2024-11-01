@@ -4,13 +4,14 @@ import { Strategy, ExtractJwt } from 'passport-jwt';
 import { UserJwtPayload } from './jwt-payload.interface';
 import { UserEntity } from './user.entity';
 import { UserRepository } from './user.repository';
+import * as config from 'config';
 
 @Injectable()
 export class JWTStrategy extends PassportStrategy(Strategy) {
   constructor(private readonly userRepository: UserRepository) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: 'verysecrtcode963',
+      secretOrKey: config.get('jwt.secret'),
     });
   }
 
