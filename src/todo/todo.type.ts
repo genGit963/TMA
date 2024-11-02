@@ -2,7 +2,7 @@ import { Field, ID, ObjectType } from '@nestjs/graphql';
 
 @ObjectType('Todos')
 export class TodoType {
-  @Field((type) => ID)
+  @Field(() => ID)
   id: string;
 
   @Field()
@@ -11,13 +11,13 @@ export class TodoType {
   @Field()
   description: string;
 
-  @Field()
+  @Field({ nullable: true })
   status: TodoStatus;
 
-  @Field()
+  @Field({ nullable: true })
   startDate: string;
 
-  @Field()
+  @Field({ nullable: true })
   endDate: string;
 }
 

@@ -9,7 +9,11 @@ import { TodoModule } from './todo/todo.module';
 
 @Module({
   imports: [
-    GraphQLModule.forRoot<ApolloDriverConfig>({ driver: ApolloDriver }),
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      autoSchemaFile: true,
+      // typePaths: ['./**/*.graphql'],
+    }),
     TypeOrmModule.forRoot(typeOrmconfig),
     TasksModule,
     AuthModule,

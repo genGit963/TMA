@@ -1,0 +1,15 @@
+server:
+  port: 3400
+
+db:
+  type: 'postgres'
+  port: 5432
+  db_name: 'atmafaa_dataabase'
+
+mongodb:
+  url: ''
+  username: 'dafdajafanjafau41ad0'
+  password: 'h5dHe90B07afadnrYu8'
+
+jwt:
+  expiresIn: 3600
