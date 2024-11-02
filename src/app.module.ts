@@ -5,7 +5,9 @@ import { TasksModule } from './tasks/tasks.module';
 import { AuthModule } from './auth/auth.module';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import * as config from 'config';
 import { TodoModule } from './todo/todo.module';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
@@ -14,6 +16,9 @@ import { TodoModule } from './todo/todo.module';
       autoSchemaFile: true,
       // typePaths: ['./**/*.graphql'],
     }),
+    MongooseModule.forRoot(
+      process.env.MONGODB_URL || config.get('mongodb.uri'),
+    ),
     TypeOrmModule.forRoot(typeOrmconfig),
     TasksModule,
     AuthModule,
