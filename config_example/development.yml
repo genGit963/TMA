@@ -4,5 +4,9 @@ db:
   password: 'mahafefafashafdafda'
   synchronize: true
 
+mongodb:
+  username: 'dafdajafanjafau41ad0'
+  password: 'h5dHe90B07afadnrYu8'
+
 jwt:
   secret: 'adfakafaaer324$5'
