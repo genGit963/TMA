@@ -21,7 +21,7 @@ export class Todo {
   @Prop({})
   endDate: string;
 
-  @Prop({ required: true })
+  @Prop({ required: true, parseInt: true })
   taskId: number;
 }
 

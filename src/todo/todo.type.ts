@@ -1,8 +1,13 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
 
+export enum TodoStatus {
+  WORKING = 'WORKING',
+  DONE = 'DONE',
+  PENDING = 'PENDING',
+}
 @ObjectType('Todos')
 export class TodoType {
-  @Field(() => ID)
+  @Field((type) => String)
   id: string;
 
   @Field()
@@ -11,7 +16,7 @@ export class TodoType {
   @Field()
   description: string;
 
-  @Field({ nullable: true })
+  @Field({ defaultValue: TodoStatus.PENDING })
   status: TodoStatus;
 
   @Field({ nullable: true })
@@ -19,10 +24,7 @@ export class TodoType {
 
   @Field({ nullable: true })
   endDate: string;
-}
 
-export enum TodoStatus {
-  WORKING = 'WORKING',
-  DONE = 'DONE',
-  PENDING = 'PENDING',
+  @Field((type) => Int)
+  taskId: number;
 }

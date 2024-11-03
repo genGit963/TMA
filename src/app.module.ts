@@ -8,6 +8,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import * as config from 'config';
 import { TodoModule } from './todo/todo.module';
 import { MongooseModule } from '@nestjs/mongoose';
+import { StaffModule } from './staff/staff.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { MongooseModule } from '@nestjs/mongoose';
     TasksModule,
     AuthModule,
     TodoModule,
+    StaffModule,
   ],
 })
 export class AppModule {}
