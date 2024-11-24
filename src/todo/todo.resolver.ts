@@ -7,7 +7,7 @@ import { UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
 @Resolver(() => TodoType)
-@UseGuards(AuthGuard())
+@UseGuards(AuthGuard('jwt'))
 export class TodoResolver {
   constructor(private readonly todoServices: TodoServices) {}
 
